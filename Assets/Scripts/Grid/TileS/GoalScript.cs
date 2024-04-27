@@ -7,15 +7,31 @@ public class GoalScript : TileScript
     private bool _isOccupied;
     private bool _isFilled;
 
-    public bool IsOccupied
+    public bool IsOccupied()
     {
-        get => _isOccupied;
-        set => _isOccupied = value;
+        if (transform.childCount > 0)
+        {
+            return true;
+        }
+        return false;
     }
 
-    public bool IsFilled
+    public bool IsFilled()
     {
-        get => _isFilled;
-        set => _isFilled = value;
+        if (!IsOccupied())
+        {
+            return false;
+        }
+        if (transform.GetComponentInChildren<TileOccupier>().IsPlayer)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public TileOccupier GetOccupier()
+    {
+        return transform.GetComponentInChildren<TileOccupier>();
     }
 }
