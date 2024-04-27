@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour, PlayerControl.IMovementActions
+public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
 {
     // Start is called before the first frame update
     void Start()
