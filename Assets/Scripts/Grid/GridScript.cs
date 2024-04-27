@@ -1,27 +1,23 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class GridScript : MonoBehaviour
 {
-    // Start is called before the first frame update
     private TileScript[,] _tiles;
     private List<TileOccupier> _crates;
     private TileOccupier _player;
     private LevelLoader _levelLoader;
 
-    [SerializeField] private GameObject WallPrefab;
-    [SerializeField] private GameObject GroundPrefab;
-    [SerializeField] private GameObject GoalPrefab;
-    [SerializeField] private GameObject PlayerPrefab;
-    [SerializeField] private GameObject CratePrefab;
-    [SerializeField] private float TileSize;
+    [SerializeField] private GameObject wallPrefab;
+    [SerializeField] private GameObject groundPrefab;
+    [SerializeField] private GameObject goalPrefab;
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject cratePrefab;
+    [SerializeField] private float tileSize;
     private float _offsetX;
     private float _offsetY;
     
-    void OnEnable()
+    private void OnEnable()
     {
         _levelLoader = GetComponent<LevelLoader>();
         _crates = new List<TileOccupier>();
@@ -31,18 +27,11 @@ public class GridScript : MonoBehaviour
     {
         SetTileMap(_levelLoader.GetLevel());
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void SetTileMap(char[,] gridArray)
     {
-        
-    }
-
-
-    public void SetTileMap(char[,] gridArray)
-    {
-        _offsetX = -(gridArray.GetLength(0) * TileSize)/2;
-        _offsetY = (gridArray.GetLength(1) * TileSize)/2;
+        _offsetX = -(gridArray.GetLength(0) * tileSize)/2;
+        _offsetY = (gridArray.GetLength(1) * tileSize)/2;
         
         _tiles = new TileScript[gridArray.GetLength(0), gridArray.GetLength(1)];
         for(int i = 0; i < gridArray.GetLength(1); i++)
@@ -50,7 +39,7 @@ public class GridScript : MonoBehaviour
             for(int j = 0; j < gridArray.GetLength(0); j++)
             {
                 _tiles[j, i] = DecodeTile(gridArray[j,i]);
-                _tiles[j, i].Initialize(j, i, _offsetX + j * TileSize, _offsetY - i * TileSize);
+                _tiles[j, i].Initialize(j, i, _offsetX + j * tileSize, _offsetY - i * tileSize);
             }
         }
     }
@@ -60,18 +49,18 @@ public class GridScript : MonoBehaviour
         return _tiles[x, y];
     }
 
-    public TileScript DecodeTile(char tileChar)
+    private TileScript DecodeTile(char tileChar)
     {
         switch (tileChar)
         {
             case '#':
             {
-                GameObject wall = Instantiate(WallPrefab, transform);
+                GameObject wall = Instantiate(wallPrefab, transform);
                 return wall.GetComponent<WallScript>();
             }
             case '.':
             {
-                GameObject ground = Instantiate(GroundPrefab, transform);
+                GameObject ground = Instantiate(groundPrefab, transform);
                 return ground.GetComponent<GroundScript>();
             }
             case '*':
@@ -88,7 +77,7 @@ public class GridScript : MonoBehaviour
             }
             case 'o':
             {
-                GameObject goal = Instantiate(GoalPrefab, transform);
+                GameObject goal = Instantiate(goalPrefab, transform);
                 return goal.GetComponent<GoalScript>();
             }
             case 'X':
@@ -103,9 +92,8 @@ public class GridScript : MonoBehaviour
                 _player = player;
                 return ground.GetComponent<GroundScript>();
             }
+            default:
+                return null;
         }
-
-        return null;
     }
-    
 }

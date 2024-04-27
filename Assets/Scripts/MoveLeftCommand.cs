@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveLeftCommand : ICommand
+public class MoveLeftCommand : MoveCommand
 {
-    public bool Execute()
+    public override bool Execute()
     {
         throw new System.NotImplementedException();
     }
 
-    public bool Undo()
+    public override bool Undo()
     {
         throw new System.NotImplementedException();
     }
