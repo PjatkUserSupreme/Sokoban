@@ -66,10 +66,10 @@ public class GridScript : MonoBehaviour
             case '*':
             {
                 //TODO skrzynki
-                GameObject ground = Instantiate(GroundPrefab, transform);
+                GameObject ground = Instantiate(groundPrefab, transform);
                 GroundScript groundScript = ground.GetComponent<GroundScript>();
                 
-                TileOccupier crate = Instantiate(CratePrefab, ground.transform).GetComponent<TileOccupier>();
+                TileOccupier crate = Instantiate(cratePrefab, ground.transform).GetComponent<TileOccupier>();
                 crate.Initialize(groundScript);
                 
                 _crates.Add(crate);
@@ -83,10 +83,10 @@ public class GridScript : MonoBehaviour
             case 'X':
             {
                 //TODO gracz
-                GameObject ground = Instantiate(GroundPrefab, transform);
+                GameObject ground = Instantiate(groundPrefab, transform);
                 GroundScript groundScript = ground.GetComponent<GroundScript>();
                 
-                TileOccupier player = Instantiate(PlayerPrefab, ground.transform).GetComponent<TileOccupier>();
+                TileOccupier player = Instantiate(playerPrefab, ground.transform).GetComponent<TileOccupier>();
                 player.Initialize(groundScript);
                 
                 _player = player;
