@@ -1,17 +1,16 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class CommandInvoker : MonoBehaviour
+public class CommandInvoker
 {
-    private Stack<ICommand> undoStack;
+    private Stack<ICommand> _undoStack;
 
-    private void ExecuteCommand(ICommand command)
+    public void ExecuteCommand(ICommand command)
     {
         command.Execute();
-        undoStack.Push(command);
+        _undoStack.Push(command);
     }
-    private void undoCommand()
+    public void UndoCommand()
     {
-        undoStack.Pop().Undo();
+        _undoStack.Pop().Undo();
     }
 }
