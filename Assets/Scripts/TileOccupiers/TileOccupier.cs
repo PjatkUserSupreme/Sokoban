@@ -5,6 +5,7 @@ using UnityEngine;
 public class TileOccupier : MonoBehaviour
 {
     private int _coordX, _coordY;
+    [SerializeField] private bool isPlayer;
     
     
     public void Initialize(int coordX, int coordY, float posX, float posY)
@@ -17,6 +18,8 @@ public class TileOccupier : MonoBehaviour
     public int CoordX => _coordX;
 
     public int CoordY => _coordY;
+
+    public bool IsPlayer => isPlayer;
 
     public void MoveToTile(TileScript tileScript)
     {
