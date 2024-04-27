@@ -63,20 +63,25 @@ public class GridScript : MonoBehaviour
             }
             case '.':
             {
-                GameObject wall = Instantiate(WallPrefab);
-                return wall.GetComponent<WallScript>();
+                GameObject ground = Instantiate(GroundPrefab);
+                return ground.GetComponent<GroundScript>();
             }
             case '*':
             {
                 //TODO skrzynki
-                GameObject wall = Instantiate(WallPrefab);
-                return wall.GetComponent<WallScript>();
+                GameObject ground = Instantiate(GroundPrefab);
+                return ground.GetComponent<GroundScript>();
             }
             case 'o':
             {
-                //TODO skrzynki
-                GameObject wall = Instantiate(WallPrefab);
-                return wall.GetComponent<WallScript>();
+                GameObject goal = Instantiate(GoalPrefab);
+                return goal.GetComponent<GoalScript>();
+            }
+            case 'x':
+            {
+                //TODO gracz
+                GameObject ground = Instantiate(GroundPrefab);
+                return ground.GetComponent<GroundScript>();
             }
         }
 
