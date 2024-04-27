@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
@@ -13,12 +14,20 @@ public class LevelLoader : MonoBehaviour
         _nextLevel = 1;
     }
 
-    public string[,] GetLevel()
+    public char[,] GetLevel()
     {
         TextAsset levelFile=(TextAsset)Resources.Load("level_" + _nextLevel);
         string levelString = levelFile.text;
-        List<String> lines = new List<string>(levelFile.text.Split('\n'));
-        string[,] gridArray = new string[lines[0].Length, lines.Count];
+        List<string> lines = new List<string>(levelFile.text.Split('\n'));
+        char[,] gridArray = new char[lines[0].Length, lines.Count];
+
+        for(int i = 0; i < lines.Count; i++)
+        {
+            for(int j = 0; j < lines[i].Length; j++)
+            {
+                gridArray[j, i] = lines[i].ElementAt(j);
+            }
+        }
         
         _nextLevel++;
         return gridArray;

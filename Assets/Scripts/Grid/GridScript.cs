@@ -7,8 +7,16 @@ using UnityEngine;
 public class GridScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    private List<string> _levelFiles;
+    private TileScript[,] _tiles;
     private LevelLoader _levelLoader;
+
+    [SerializeField] private GameObject WallPrefab;
+    [SerializeField] private GameObject GroundPrefab;
+    [SerializeField] private GameObject GoalPrefab;
+    [SerializeField] private float TileSize;
+    [SerializeField] private float OffsetX;
+    [SerializeField] private float OffsetY;
+    
     void OnEnable()
     {
         _levelLoader = GetComponent<LevelLoader>();
@@ -16,7 +24,7 @@ public class GridScript : MonoBehaviour
 
     private void Start()
     {
-        LoadLevel(_levelLoader.GetLevel());
+        SetTileMap(_levelLoader.GetLevel());
     }
 
     // Update is called once per frame
@@ -26,11 +34,53 @@ public class GridScript : MonoBehaviour
     }
 
 
-    public void LoadLevel(string[,] gridArray)
+    public void SetTileMap(char[,] gridArray)
     {
-        
+        _tiles = new TileScript[gridArray.Length, gridArray.Length];
+        for(int i = 0; i < gridArray.Length; i++)
+        {
+            for(int j = 0; j < gridArray.Length; j++)
+            {
+                _tiles[j, i] = DecodeTile(gridArray[j,i]);
+                _tiles[j, i].Initialize(j, i, OffsetX + j * TileSize, OffsetY + i * TileSize);
+            }
+        }
     }
-    
-    
+
+    public TileScript GetTile(int x, int y)
+    {
+        return _tiles[x, y];
+    }
+
+    public TileScript DecodeTile(char tileChar)
+    {
+        switch (tileChar)
+        {
+            case '#':
+            {
+                GameObject wall = Instantiate(WallPrefab);
+                return wall.GetComponent<WallScript>();
+            }
+            case '.':
+            {
+                GameObject wall = Instantiate(WallPrefab);
+                return wall.GetComponent<WallScript>();
+            }
+            case '*':
+            {
+                //TODO skrzynki
+                GameObject wall = Instantiate(WallPrefab);
+                return wall.GetComponent<WallScript>();
+            }
+            case 'o':
+            {
+                //TODO skrzynki
+                GameObject wall = Instantiate(WallPrefab);
+                return wall.GetComponent<WallScript>();
+            }
+        }
+
+        return null;
+    }
     
 }
