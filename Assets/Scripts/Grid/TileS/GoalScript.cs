@@ -29,4 +29,9 @@ public class GoalScript : TileScript
 
         return true;
     }
+
+    public TileOccupier GetOccupier()
+    {
+        return transform.GetComponentInChildren<TileOccupier>();
+    }
 }

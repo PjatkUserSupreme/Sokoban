@@ -8,8 +8,8 @@ public class GridScript : MonoBehaviour
 {
     // Start is called before the first frame update
     private TileScript[,] _tiles;
-    private List<GameObject> _crates;
-    private GameObject _player;
+    private List<TileOccupier> _crates;
+    private TileOccupier _player;
     private LevelLoader _levelLoader;
 
     [SerializeField] private GameObject WallPrefab;
@@ -24,7 +24,7 @@ public class GridScript : MonoBehaviour
     void OnEnable()
     {
         _levelLoader = GetComponent<LevelLoader>();
-        _crates = new List<GameObject>();
+        _crates = new List<TileOccupier>();
     }
 
     private void Start()
@@ -78,10 +78,13 @@ public class GridScript : MonoBehaviour
             {
                 //TODO skrzynki
                 GameObject ground = Instantiate(GroundPrefab, transform);
-                GameObject crate = Instantiate(CratePrefab, ground.transform);
-                crate.transform.position = ground.transform.position;
+                GroundScript groundScript = ground.GetComponent<GroundScript>();
+                
+                TileOccupier crate = Instantiate(CratePrefab, ground.transform).GetComponent<TileOccupier>();
+                crate.Initialize(groundScript);
+                
                 _crates.Add(crate);
-                return ground.GetComponent<GroundScript>();
+                return groundScript;
             }
             case 'o':
             {
@@ -92,8 +95,11 @@ public class GridScript : MonoBehaviour
             {
                 //TODO gracz
                 GameObject ground = Instantiate(GroundPrefab, transform);
-                GameObject player = Instantiate(PlayerPrefab, ground.transform);
-                player.transform.position = ground.transform.position;
+                GroundScript groundScript = ground.GetComponent<GroundScript>();
+                
+                TileOccupier player = Instantiate(PlayerPrefab, ground.transform).GetComponent<TileOccupier>();
+                player.Initialize(groundScript);
+                
                 _player = player;
                 return ground.GetComponent<GroundScript>();
             }

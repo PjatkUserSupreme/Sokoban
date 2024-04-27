@@ -8,11 +8,11 @@ public class TileOccupier : MonoBehaviour
     [SerializeField] private bool isPlayer;
     
     
-    public void Initialize(int coordX, int coordY, float posX, float posY)
+    public void Initialize(TileScript tileScript)
     {
-        gameObject.transform.position = new Vector3(posX, posY, 0);
-        _coordX = coordX;
-        _coordY = coordY;
+        gameObject.transform.position = tileScript.gameObject.transform.position;
+        _coordX = tileScript.CoordX;
+        _coordY = tileScript.CoordY;
     }
 
     public int CoordX => _coordX;

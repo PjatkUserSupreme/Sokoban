@@ -11,4 +11,9 @@ public class GroundScript : TileScript
         get => _isOccupied;
         set => _isOccupied = value;
     }
+    
+    public TileOccupier GetOccupier()
+    {
+        return transform.GetComponentInChildren<TileOccupier>();
+    }
 }
