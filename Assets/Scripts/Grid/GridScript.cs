@@ -8,18 +8,23 @@ public class GridScript : MonoBehaviour
 {
     // Start is called before the first frame update
     private TileScript[,] _tiles;
+    private List<GameObject> _crates;
+    private GameObject _player;
     private LevelLoader _levelLoader;
 
     [SerializeField] private GameObject WallPrefab;
     [SerializeField] private GameObject GroundPrefab;
     [SerializeField] private GameObject GoalPrefab;
+    [SerializeField] private GameObject PlayerPrefab;
+    [SerializeField] private GameObject CratePrefab;
     [SerializeField] private float TileSize;
-    [SerializeField] private float OffsetX;
-    [SerializeField] private float OffsetY;
+    private float _offsetX;
+    private float _offsetY;
     
     void OnEnable()
     {
         _levelLoader = GetComponent<LevelLoader>();
+        _crates = new List<GameObject>();
     }
 
     private void Start()
@@ -36,13 +41,16 @@ public class GridScript : MonoBehaviour
 
     public void SetTileMap(char[,] gridArray)
     {
-        _tiles = new TileScript[gridArray.Length, gridArray.Length];
-        for(int i = 0; i < gridArray.Length; i++)
+        _offsetX = -(gridArray.GetLength(0) * TileSize)/2;
+        _offsetY = (gridArray.GetLength(1) * TileSize)/2;
+        
+        _tiles = new TileScript[gridArray.GetLength(0), gridArray.GetLength(1)];
+        for(int i = 0; i < gridArray.GetLength(1); i++)
         {
-            for(int j = 0; j < gridArray.Length; j++)
+            for(int j = 0; j < gridArray.GetLength(0); j++)
             {
                 _tiles[j, i] = DecodeTile(gridArray[j,i]);
-                _tiles[j, i].Initialize(j, i, OffsetX + j * TileSize, OffsetY + i * TileSize);
+                _tiles[j, i].Initialize(j, i, _offsetX + j * TileSize, _offsetY - i * TileSize);
             }
         }
     }
@@ -58,29 +66,35 @@ public class GridScript : MonoBehaviour
         {
             case '#':
             {
-                GameObject wall = Instantiate(WallPrefab);
+                GameObject wall = Instantiate(WallPrefab, transform);
                 return wall.GetComponent<WallScript>();
             }
             case '.':
             {
-                GameObject ground = Instantiate(GroundPrefab);
+                GameObject ground = Instantiate(GroundPrefab, transform);
                 return ground.GetComponent<GroundScript>();
             }
             case '*':
             {
                 //TODO skrzynki
-                GameObject ground = Instantiate(GroundPrefab);
+                GameObject ground = Instantiate(GroundPrefab, transform);
+                GameObject crate = Instantiate(CratePrefab, ground.transform);
+                crate.transform.position = ground.transform.position;
+                _crates.Add(crate);
                 return ground.GetComponent<GroundScript>();
             }
             case 'o':
             {
-                GameObject goal = Instantiate(GoalPrefab);
+                GameObject goal = Instantiate(GoalPrefab, transform);
                 return goal.GetComponent<GoalScript>();
             }
-            case 'x':
+            case 'X':
             {
                 //TODO gracz
-                GameObject ground = Instantiate(GroundPrefab);
+                GameObject ground = Instantiate(GroundPrefab, transform);
+                GameObject player = Instantiate(PlayerPrefab, ground.transform);
+                player.transform.position = ground.transform.position;
+                _player = player;
                 return ground.GetComponent<GroundScript>();
             }
         }

@@ -28,37 +28,3 @@ public class TileScript : MonoBehaviour
 
     public int CoordY => _coordY;
 }
-
-public class GroundScript : TileScript
-{
-    private bool _isOccupied;
-
-    public bool IsOccupied
-    {
-        get => _isOccupied;
-        set => _isOccupied = value;
-    }
-}
-
-public class WallScript : TileScript
-{
-    
-}
-
-public class GoalScript : TileScript
-{
-    private bool _isOccupied;
-    private bool _isFilled;
-
-    public bool IsOccupied
-    {
-        get => _isOccupied;
-        set => _isOccupied = value;
-    }
-
-    public bool IsFilled
-    {
-        get => _isFilled;
-        set => _isFilled = value;
-    }
-}

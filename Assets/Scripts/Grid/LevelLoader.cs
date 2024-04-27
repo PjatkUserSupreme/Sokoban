@@ -18,12 +18,12 @@ public class LevelLoader : MonoBehaviour
     {
         TextAsset levelFile=(TextAsset)Resources.Load("level_" + _nextLevel);
         string levelString = levelFile.text;
+        Debug.Log(levelString);
         List<string> lines = new List<string>(levelFile.text.Split('\n'));
-        char[,] gridArray = new char[lines[0].Length, lines.Count];
-
+        char[,] gridArray = new char[lines[lines.Count -1].Length, lines.Count];
         for(int i = 0; i < lines.Count; i++)
         {
-            for(int j = 0; j < lines[i].Length; j++)
+            for(int j = 0; j < lines[lines.Count -1].Length; j++)
             {
                 gridArray[j, i] = lines[i].ElementAt(j);
             }
