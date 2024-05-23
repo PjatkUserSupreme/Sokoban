@@ -3,6 +3,14 @@ using UnityEngine;
 
 public class GridScript : MonoBehaviour
 {
+    private static GridScript instance;
+
+    public static GridScript GetInstance()
+    {
+        return instance;
+    }
+    
+    
     private TileScript[,] _tiles;
     private List<TileOccupier> _crates;
     private TileOccupier _player;
@@ -19,6 +27,7 @@ public class GridScript : MonoBehaviour
     
     private void OnEnable()
     {
+        instance = this;
         _levelLoader = GetComponent<LevelLoader>();
         _crates = new List<TileOccupier>();
     }
