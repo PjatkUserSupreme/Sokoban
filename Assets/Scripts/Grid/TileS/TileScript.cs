@@ -28,6 +28,11 @@ public class TileScript : MonoBehaviour
     {
         return true;
     }
+    
+    public virtual TileOccupier GetOccupier()
+    {
+        return null;
+    }
 
     public int CoordX => _coordX;
 

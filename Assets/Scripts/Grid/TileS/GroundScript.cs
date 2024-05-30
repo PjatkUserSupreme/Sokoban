@@ -13,7 +13,7 @@ public class GroundScript : TileScript
         return false;
     }
     
-    public TileOccupier GetOccupier()
+    public override TileOccupier GetOccupier()
     {
         return transform.GetComponentInChildren<TileOccupier>();
     }

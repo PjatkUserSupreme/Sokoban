@@ -36,12 +36,6 @@ public class GridScript : MonoBehaviour
     {
         SetTileMap(_levelLoader.GetLevel());
         Init();
-        Debug.Log(IsMoveLegal("UP"));
-        Debug.Log(WillACrateMove("UP"));
-        Debug.Log(IsMoveLegal("RIGHT"));
-        Debug.Log(WillACrateMove("RIGHT"));
-        Debug.Log(IsMoveLegal("DOWN"));
-        Debug.Log(WillACrateMove("DOWN"));
     }
     
     private void SetTileMap(char[,] gridArray)
@@ -348,5 +342,66 @@ public class GridScript : MonoBehaviour
         }
         
         return false;
+    }
+
+
+    public void MovePlayer(string direction)
+    {
+        switch (direction)
+        {
+            case "UP":
+            {
+                _player.MoveToTile(_tiles[_player.CoordX, _player.CoordY - 1]);
+                break;
+            }
+            case "DOWN":
+            {
+                _player.MoveToTile(_tiles[_player.CoordX, _player.CoordY + 1]);
+                break;
+            }
+            
+            case "LEFT":
+            {
+                _player.MoveToTile(_tiles[_player.CoordX - 1, _player.CoordY]);
+                break;
+            }
+            case "RIGHT":
+            {
+                _player.MoveToTile(_tiles[_player.CoordX + 1, _player.CoordY]);
+                break;
+            }
+        }
+    }
+    
+    public void MoveCrate(string direction)
+    {
+        switch (direction)
+        {
+            case "UP":
+            {
+                TileOccupier crate = _tiles[_player.CoordX, _player.CoordY - 1].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX, _player.CoordY - 2]);
+                break;
+            }
+            case "DOWN":
+            {
+                TileOccupier crate = _tiles[_player.CoordX, _player.CoordY + 1].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX, _player.CoordY + 2]);
+                break;
+            }
+            
+            case "LEFT":
+            {
+                TileOccupier crate = _tiles[_player.CoordX - 1, _player.CoordY].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX - 2, _player.CoordY]);
+                break;
+            }
+            case "RIGHT":
+            {
+                TileOccupier crate = _tiles[_player.CoordX + 1, _player.CoordY].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX + 2, _player.CoordY]);
+                break;
+            }
+        }
     }
 }

@@ -25,6 +25,8 @@ public class TileOccupier : MonoBehaviour
     public void MoveToTile(TileScript tileScript)
     {
         gameObject.transform.SetParent(tileScript.gameObject.transform);
+        _coordX = tileScript.CoordX;
+        _coordY = tileScript.CoordY;
         gameObject.transform.position = tileScript.gameObject.transform.position;
     }
 }

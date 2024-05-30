@@ -32,7 +32,7 @@ public class GoalScript : TileScript
     
     
 
-    public TileOccupier GetOccupier()
+    public override TileOccupier GetOccupier()
     {
         return transform.GetComponentInChildren<TileOccupier>();
     }
