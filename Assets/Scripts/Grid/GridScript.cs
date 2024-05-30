@@ -279,7 +279,43 @@ public class GridScript : MonoBehaviour
         
         return false;
     }
+    public bool MovePlayer(string direction)
+    {
+        var isMoveLegal = IsMoveLegal(direction);
 
+        if (!isMoveLegal)
+        {
+            return false;
+        }
+        
+        switch (direction)
+        {
+            case "UP":
+            {
+                _player.MoveToTile(_tiles[_player.CoordX, _player.CoordY - 1]);
+                break;
+            }
+            case "DOWN":
+            {
+                _player.MoveToTile(_tiles[_player.CoordX, _player.CoordY + 1]);
+                break;
+            }
+            
+            case "LEFT":
+            {
+                _player.MoveToTile(_tiles[_player.CoordX - 1, _player.CoordY]);
+                break;
+            }
+            case "RIGHT":
+            {
+                _player.MoveToTile(_tiles[_player.CoordX + 1, _player.CoordY]);
+                break;
+            }
+        }
+        return true;
+    }
+    
+    
     public bool WillACrateMove(string direction)
     {
         switch (direction)
@@ -349,66 +385,46 @@ public class GridScript : MonoBehaviour
         
         return false;
     }
-
-
-    public void MovePlayer(string direction)
-    {
-        switch (direction)
-        {
-            case "UP":
-            {
-                _player.MoveToTile(_tiles[_player.CoordX, _player.CoordY - 1]);
-                break;
-            }
-            case "DOWN":
-            {
-                _player.MoveToTile(_tiles[_player.CoordX, _player.CoordY + 1]);
-                break;
-            }
-            
-            case "LEFT":
-            {
-                _player.MoveToTile(_tiles[_player.CoordX - 1, _player.CoordY]);
-                break;
-            }
-            case "RIGHT":
-            {
-                _player.MoveToTile(_tiles[_player.CoordX + 1, _player.CoordY]);
-                break;
-            }
-        }
-    }
     
-    public void MoveCrate(string direction)
+    public bool MoveCrate(string direction)
     {
+        var willACrateMove = WillACrateMove(direction);
+
+        if (!willACrateMove)
+        {
+            return false;
+        }
+        
         switch (direction)
         {
             case "UP":
             {
-                TileOccupier crate = _tiles[_player.CoordX, _player.CoordY - 1].GetOccupier();
+                var crate = _tiles[_player.CoordX, _player.CoordY - 1].GetOccupier();
                 crate.MoveToTile(_tiles[_player.CoordX, _player.CoordY - 2]);
                 break;
             }
             case "DOWN":
             {
-                TileOccupier crate = _tiles[_player.CoordX, _player.CoordY + 1].GetOccupier();
+                var crate = _tiles[_player.CoordX, _player.CoordY + 1].GetOccupier();
                 crate.MoveToTile(_tiles[_player.CoordX, _player.CoordY + 2]);
                 break;
             }
             
             case "LEFT":
             {
-                TileOccupier crate = _tiles[_player.CoordX - 1, _player.CoordY].GetOccupier();
+                var crate = _tiles[_player.CoordX - 1, _player.CoordY].GetOccupier();
                 crate.MoveToTile(_tiles[_player.CoordX - 2, _player.CoordY]);
                 break;
             }
             case "RIGHT":
             {
-                TileOccupier crate = _tiles[_player.CoordX + 1, _player.CoordY].GetOccupier();
+                var crate = _tiles[_player.CoordX + 1, _player.CoordY].GetOccupier();
                 crate.MoveToTile(_tiles[_player.CoordX + 2, _player.CoordY]);
                 break;
             }
         }
+
+        return true;
     }
 
     public bool IsLevelComplete()

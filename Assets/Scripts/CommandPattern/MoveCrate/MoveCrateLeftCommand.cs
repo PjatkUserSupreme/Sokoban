@@ -5,12 +5,12 @@ namespace CommandPattern.MoveCrate
     {
         public override bool Execute()
         {
-            throw new System.NotImplementedException();
+            return Grid.MoveCrate("LEFT");
         }
 
         public override bool Undo()
         {
-            throw new System.NotImplementedException();
+            return Grid.MoveCrate("RIGHT");
         }
     }
 }

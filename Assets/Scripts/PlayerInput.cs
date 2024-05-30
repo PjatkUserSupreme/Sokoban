@@ -21,7 +21,6 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
         _control.Movement.Enable();
     }
     
-    
     public void OnUp(InputAction.CallbackContext context)
     {
         if (context.performed)
