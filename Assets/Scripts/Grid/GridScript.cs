@@ -34,12 +34,14 @@ public class GridScript : MonoBehaviour
 
     private void Start()
     {
-        SetTileMap(_levelLoader.GetLevel());
-        Init();
     }
     
-    private void SetTileMap(char[,] gridArray)
+    public void SetTileMap(char[,] gridArray)
     {
+        for (int i = gameObject.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(gameObject.transform.GetChild(i));
+        }
         _offsetX = -(gridArray.GetLength(0) * tileSize)/2;
         _offsetY = (gridArray.GetLength(1) * tileSize)/2;
         
@@ -52,6 +54,7 @@ public class GridScript : MonoBehaviour
                 _tiles[j, i].Initialize(j, i, _offsetX + j * tileSize, _offsetY - i * tileSize);
             }
         }
+        Init();
     }
 
     private void Init()
@@ -403,5 +406,26 @@ public class GridScript : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public bool IsLevelComplete()
+    {
+        foreach (var tileScript in _tiles)
+        {
+            if (tileScript is GoalScript)
+            {
+                if (tileScript.GetOccupier() is null)
+                {
+                    return false;
+                }
+
+                if (tileScript.GetOccupier().IsPlayer)
+                {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
     }
 }
