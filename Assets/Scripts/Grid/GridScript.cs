@@ -38,14 +38,17 @@ public class GridScript : MonoBehaviour
     
     public void SetTileMap(char[,] gridArray)
     {
+        _crates = new List<TileOccupier>();
+        _tiles = new TileScript[gridArray.GetLength(0), gridArray.GetLength(1)];
+        _player = null;
         for (int i = gameObject.transform.childCount - 1; i >= 0; i--)
         {
-            Destroy(gameObject.transform.GetChild(i));
+            Destroy(gameObject.transform.GetChild(i).gameObject);
         }
         _offsetX = -(gridArray.GetLength(0) * tileSize)/2;
         _offsetY = (gridArray.GetLength(1) * tileSize)/2;
         
-        _tiles = new TileScript[gridArray.GetLength(0), gridArray.GetLength(1)];
+        
         for(int i = 0; i < gridArray.GetLength(1); i++)
         {
             for(int j = 0; j < gridArray.GetLength(0); j++)

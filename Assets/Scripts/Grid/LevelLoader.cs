@@ -8,6 +8,7 @@ using UnityEngine;
 public class LevelLoader : MonoBehaviour
 {
     private int _currentLevel;
+    private int _highestCompleted;
     private GridScript _gridScript;
     private List<Tuple<string, char[,]>> _levels;
 
@@ -22,7 +23,6 @@ public class LevelLoader : MonoBehaviour
         Debug.Log(_levels.Count);
         _gridScript = GetComponent<GridScript>();
         _currentLevel = 0;
-        StartLevel(_currentLevel);
     }
 
 
@@ -41,10 +41,10 @@ public class LevelLoader : MonoBehaviour
             string levelString = levelFile.text;
             List<string> lines = new List<string>(levelFile.text.Split('\n'));
             string name = lines[0];
-            char[,] map = new char[lines[lines.Count -1].Length, lines.Count - 1];
+            char[,] map = new char[lines[^1].Length, lines.Count - 1];
             for(int i = 1; i < lines.Count; i++)
             {
-                for(int j = 0; j < lines[lines.Count -1].Length; j++)
+                for(int j = 0; j < lines[^1].Length; j++)
                 {
                     map[j, i - 1] = lines[i].ElementAt(j);
                 }
@@ -57,5 +57,11 @@ public class LevelLoader : MonoBehaviour
     {
         Debug.Log(_levels[i].Item1);
         _gridScript.SetTileMap(_levels[i].Item2);
+    }
+
+    public void OnEndLevel()
+    {
+        _highestCompleted = Math.Max(_highestCompleted, _currentLevel);
+        
     }
 }
