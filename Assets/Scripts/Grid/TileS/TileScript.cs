@@ -24,6 +24,16 @@ public class TileScript : MonoBehaviour
         _coordY = coordY;
     }
 
+    public virtual bool IsOccupied()
+    {
+        return true;
+    }
+    
+    public virtual TileOccupier GetOccupier()
+    {
+        return null;
+    }
+
     public int CoordX => _coordX;
 
     public int CoordY => _coordY;
