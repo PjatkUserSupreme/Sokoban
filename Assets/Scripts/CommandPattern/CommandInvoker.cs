@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace CommandPattern
 {
     public class CommandInvoker
     {
-        private Stack<ICommand> _undoStack;
+        private Stack<ICommand> _undoStack = new Stack<ICommand>();
 
         public void ExecuteCommand(ICommand command)
         {
@@ -20,7 +21,8 @@ namespace CommandPattern
         {
             if (_undoStack.Count > 0)
             {
-                _undoStack.Pop().Undo();
+                ICommand command = _undoStack.Pop();
+                command.Undo();
             }
         }
     }

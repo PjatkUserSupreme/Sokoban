@@ -10,7 +10,7 @@ namespace CommandPattern.MoveCrate
 
         public override bool Undo()
         {
-            return Grid.MoveCrate("UP");
+            return Grid.UndoMoveCrate("DOWN");
         }
     }
 }

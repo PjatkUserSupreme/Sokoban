@@ -207,7 +207,7 @@ public class GridScript : MonoBehaviour
                 {
                     return false;
                 }
-                if (_tiles[_player.CoordX - 1, _player.CoordX] is null)
+                if (_tiles[_player.CoordX - 1, _player.CoordY] is null)
                 {
                     return false;
                 }
@@ -424,6 +424,40 @@ public class GridScript : MonoBehaviour
             }
         }
 
+        return true;
+    }
+    
+    public bool UndoMoveCrate(string movementToUndo)
+    {
+        
+        switch (movementToUndo)
+        {
+            case "UP":
+            {
+                var crate = _tiles[_player.CoordX, _player.CoordY - 2].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX, _player.CoordY - 1]);
+                break;
+            }
+            case "DOWN":
+            {
+                var crate = _tiles[_player.CoordX, _player.CoordY + 2].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX, _player.CoordY + 1]);
+                break;
+            }
+            
+            case "LEFT":
+            {
+                var crate = _tiles[_player.CoordX - 2, _player.CoordY].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX - 1, _player.CoordY]);
+                break;
+            }
+            case "RIGHT":
+            {
+                var crate = _tiles[_player.CoordX + 2, _player.CoordY].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX + 1, _player.CoordY]);
+                break;
+            }
+        }
         return true;
     }
 

@@ -1,4 +1,5 @@
 using CommandPattern;
+using CommandPattern.MoveCrate;
 using CommandPattern.MovePlayer;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,6 +26,7 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     {
         if (context.performed)
         {
+            _commandInvoker.ExecuteCommand(new MoveCrateUpCommand());
             _commandInvoker.ExecuteCommand(new MovePlayerUpCommand());
         }
     }
@@ -33,6 +35,7 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     {
         if (context.performed)
         {
+            _commandInvoker.ExecuteCommand(new MoveCrateDownCommand());
             _commandInvoker.ExecuteCommand(new MovePlayerDownCommand());
         }
     }
@@ -41,6 +44,7 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     {
         if (context.performed)
         {
+            _commandInvoker.ExecuteCommand(new MoveCrateLeftCommand());
             _commandInvoker.ExecuteCommand(new MovePlayerLeftCommand());
         }
     }
@@ -49,12 +53,16 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     {
         if (context.performed)
         {
+            _commandInvoker.ExecuteCommand(new MoveCrateRightCommand());
             _commandInvoker.ExecuteCommand(new MovePlayerRightCommand());
         }
     }
 
     public void OnUndo(InputAction.CallbackContext context)
     {
-        _commandInvoker.UndoCommand();
+        if (context.performed)
+        {
+            _commandInvoker.UndoCommand();
+        }
     }
 }

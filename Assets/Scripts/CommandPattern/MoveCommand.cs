@@ -4,7 +4,7 @@ namespace CommandPattern
 {
     public abstract class MoveCommand : ICommand
     {
-        protected GridScript Grid;
+        protected GridScript Grid = GridScript.GetInstance();
 
         public abstract bool Execute();
 
