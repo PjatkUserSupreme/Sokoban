@@ -5,12 +5,12 @@ namespace CommandPattern.MovePlayer
     {
         public override bool Execute()
         {
-            throw new System.NotImplementedException();
+            return Grid.MovePlayer("DOWN");
         }
 
         public override bool Undo()
         {
-            throw new System.NotImplementedException();
+            return Grid.MovePlayer("UP");
         }
     }
 }

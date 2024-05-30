@@ -8,13 +8,20 @@ namespace CommandPattern
 
         public void ExecuteCommand(ICommand command)
         {
-            command.Execute();
-            _undoStack.Push(command);
+            var canExecute = command.Execute();
+
+            if (canExecute)
+            {
+                _undoStack.Push(command);
+            }
+            
         }
         public void UndoCommand()
         {
-            _undoStack.Pop().Undo();
+            if (_undoStack.Count > 0)
+            {
+                _undoStack.Pop().Undo();
+            }
         }
     }
- 
 }
