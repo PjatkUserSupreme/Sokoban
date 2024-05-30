@@ -37,9 +37,11 @@ public class GridScript : MonoBehaviour
         SetTileMap(_levelLoader.GetLevel());
         Init();
         Debug.Log(IsMoveLegal("UP"));
-        Debug.Log(IsMoveLegal("LEFT"));
+        Debug.Log(WillACrateMove("UP"));
         Debug.Log(IsMoveLegal("RIGHT"));
+        Debug.Log(WillACrateMove("RIGHT"));
         Debug.Log(IsMoveLegal("DOWN"));
+        Debug.Log(WillACrateMove("DOWN"));
     }
     
     private void SetTileMap(char[,] gridArray)
@@ -124,45 +126,36 @@ public class GridScript : MonoBehaviour
         {
             case "UP":
             {
-                
                 if (_player.CoordY == 0)
                 {
-                    Debug.Log("A");
                     return false;
                 }
                 if (_tiles[_player.CoordX, _player.CoordY - 1] is null)
                 {
-                    Debug.Log("A");
                     return false;
                 }
 
                 if (_tiles[_player.CoordX, _player.CoordY - 1] is WallScript)
                 {
-                    Debug.Log("A");
                     return false;
                 }
 
                 if (_tiles[_player.CoordX, _player.CoordY - 1].IsOccupied())
                 {
-                    Debug.Log("A");
                     if (_player.CoordY == 1)
                     {
-                        Debug.Log("A");
                         return false;
                     }
                     if (_tiles[_player.CoordX, _player.CoordY - 2] is null)
                     {
-                        Debug.Log("A");
                         return false;
                     }
                     if (_tiles[_player.CoordX, _player.CoordY - 2].IsOccupied())
                     {
-                        Debug.Log("A");
                         return false;
                     }
                     if (!_tiles[_player.CoordX, _player.CoordY - 2].IsOccupied())
                     {
-                        Debug.Log("A");
                         return true;
                     }
                 }
@@ -281,6 +274,76 @@ public class GridScript : MonoBehaviour
                     }
                 }
                 return true;
+            }
+        }
+        
+        return false;
+    }
+
+    public bool WillACrateMove(string direction)
+    {
+        switch (direction)
+        {
+            case "UP":
+            {
+                if (!(_tiles[_player.CoordX, _player.CoordY - 1] is WallScript))
+                {
+                    if (!_tiles[_player.CoordX, _player.CoordY - 1].IsOccupied())
+                    {
+                        return false;
+                    }
+                    if (!_tiles[_player.CoordX, _player.CoordY - 2].IsOccupied())
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            case "DOWN":
+            {
+                if (!(_tiles[_player.CoordX, _player.CoordY + 1] is WallScript))
+                {
+                    if (!_tiles[_player.CoordX, _player.CoordY + 1].IsOccupied())
+                    {
+                        return false;
+                    }
+                    if (!_tiles[_player.CoordX, _player.CoordY + 2].IsOccupied())
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+            case "LEFT":
+            {
+                if (!(_tiles[_player.CoordX - 1, _player.CoordY] is WallScript))
+                {
+                    if (!_tiles[_player.CoordX - 1, _player.CoordY].IsOccupied())
+                    {
+                        return false;
+                    }
+                    if (!_tiles[_player.CoordX - 2, _player.CoordY].IsOccupied())
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            case "RIGHT":
+            {
+                if (!(_tiles[_player.CoordX + 1, _player.CoordY] is WallScript))
+                {
+                    if (!_tiles[_player.CoordX + 1, _player.CoordY].IsOccupied())
+                    {
+                        return false;
+                    }
+                    if (!_tiles[_player.CoordX + 2, _player.CoordY].IsOccupied())
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
         }
         
