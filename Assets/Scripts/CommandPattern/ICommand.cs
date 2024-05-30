@@ -1,6 +1,9 @@
 
-public interface ICommand
+namespace CommandPattern
 {
-    public bool Execute();
-    public bool Undo();
+    public interface ICommand
+    {
+        public bool Execute();
+        public bool Undo();
+    }
 }
