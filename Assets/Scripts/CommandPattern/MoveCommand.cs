@@ -4,7 +4,7 @@ namespace CommandPattern
 {
     public abstract class MoveCommand : ICommand
     {
-        protected Grid Grid;
+        protected GridScript Grid;
 
         public abstract bool Execute();
 
