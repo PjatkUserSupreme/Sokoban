@@ -34,16 +34,21 @@ public class GridScript : MonoBehaviour
 
     private void Start()
     {
-        SetTileMap(_levelLoader.GetLevel());
-        Init();
     }
     
-    private void SetTileMap(char[,] gridArray)
+    public void SetTileMap(char[,] gridArray)
     {
+        _crates = new List<TileOccupier>();
+        _tiles = new TileScript[gridArray.GetLength(0), gridArray.GetLength(1)];
+        _player = null;
+        for (int i = gameObject.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(gameObject.transform.GetChild(i).gameObject);
+        }
         _offsetX = -(gridArray.GetLength(0) * tileSize)/2;
         _offsetY = (gridArray.GetLength(1) * tileSize)/2;
         
-        _tiles = new TileScript[gridArray.GetLength(0), gridArray.GetLength(1)];
+        
         for(int i = 0; i < gridArray.GetLength(1); i++)
         {
             for(int j = 0; j < gridArray.GetLength(0); j++)
@@ -52,6 +57,7 @@ public class GridScript : MonoBehaviour
                 _tiles[j, i].Initialize(j, i, _offsetX + j * tileSize, _offsetY - i * tileSize);
             }
         }
+        Init();
     }
 
     private void Init()
@@ -201,7 +207,7 @@ public class GridScript : MonoBehaviour
                 {
                     return false;
                 }
-                if (_tiles[_player.CoordX - 1, _player.CoordX] is null)
+                if (_tiles[_player.CoordX - 1, _player.CoordY] is null)
                 {
                     return false;
                 }
@@ -418,6 +424,61 @@ public class GridScript : MonoBehaviour
             }
         }
 
+        return true;
+    }
+    
+    public bool UndoMoveCrate(string movementToUndo)
+    {
+        
+        switch (movementToUndo)
+        {
+            case "UP":
+            {
+                var crate = _tiles[_player.CoordX, _player.CoordY - 2].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX, _player.CoordY - 1]);
+                break;
+            }
+            case "DOWN":
+            {
+                var crate = _tiles[_player.CoordX, _player.CoordY + 2].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX, _player.CoordY + 1]);
+                break;
+            }
+            
+            case "LEFT":
+            {
+                var crate = _tiles[_player.CoordX - 2, _player.CoordY].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX - 1, _player.CoordY]);
+                break;
+            }
+            case "RIGHT":
+            {
+                var crate = _tiles[_player.CoordX + 2, _player.CoordY].GetOccupier();
+                crate.MoveToTile(_tiles[_player.CoordX + 1, _player.CoordY]);
+                break;
+            }
+        }
+        return true;
+    }
+
+    public bool IsLevelComplete()
+    {
+        foreach (var tileScript in _tiles)
+        {
+            if (tileScript is GoalScript)
+            {
+                if (tileScript.GetOccupier() is null)
+                {
+                    return false;
+                }
+
+                if (tileScript.GetOccupier().IsPlayer)
+                {
+                    return false;
+                }
+            }
+        }
+        
         return true;
     }
 }
