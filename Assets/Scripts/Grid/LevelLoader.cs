@@ -7,6 +7,13 @@ using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
+    private static LevelLoader instance;
+
+    public static LevelLoader GetInstance()
+    {
+        return instance;
+    }
+    
     private int _currentLevel;
     private int _highestCompleted;
     private GridScript _gridScript;
@@ -14,6 +21,7 @@ public class LevelLoader : MonoBehaviour
 
     public void Awake()
     {
+        instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -23,11 +31,12 @@ public class LevelLoader : MonoBehaviour
         Debug.Log(_levels.Count);
         _gridScript = GetComponent<GridScript>();
         _currentLevel = 0;
+        _highestCompleted = -1;
     }
 
 
 
-    public void LoadLevels()
+    private void LoadLevels()
     {
         
         _levels = new List<Tuple<string, char[,]>>();
@@ -53,6 +62,8 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
+    public List<Tuple<string, char[,]>> Levels => _levels;
+
     public void StartLevel(int i)
     {
         Debug.Log(_levels[i].Item1);
@@ -64,4 +75,6 @@ public class LevelLoader : MonoBehaviour
         _highestCompleted = Math.Max(_highestCompleted, _currentLevel);
         
     }
+
+    public int HighestCompleted => _highestCompleted;
 }

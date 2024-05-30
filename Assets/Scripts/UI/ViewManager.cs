@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class ViewManager : MonoBehaviour
 {
+    private static ViewManager _instance;
+
+    public static ViewManager GetInstance()
+    {
+        return _instance;
+    }
+    
     [SerializeField] private GameObject mainMenuUI;
     [SerializeField] private GameObject levelChoiceUI;
     [SerializeField] private GameObject gameUI;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _instance = this;
     }
 
     // Update is called once per frame
