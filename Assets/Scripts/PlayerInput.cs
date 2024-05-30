@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using CommandPattern;
+using CommandPattern.MovePlayer;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,7 +26,7 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     {
         if (context.performed)
         {
-            _commandInvoker.ExecuteCommand(new MoveUpCommand());
+            _commandInvoker.ExecuteCommand(new MovePlayerUpCommand());
         }
     }
 
@@ -34,7 +34,7 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     {
         if (context.performed)
         {
-            _commandInvoker.ExecuteCommand(new MoveDownCommand());
+            _commandInvoker.ExecuteCommand(new MovePlayerDownCommand());
         }
     }
 
@@ -42,7 +42,7 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     {
         if (context.performed)
         {
-            _commandInvoker.ExecuteCommand(new MoveLeftCommand());
+            _commandInvoker.ExecuteCommand(new MovePlayerLeftCommand());
         }
     }
 
@@ -50,7 +50,7 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     {
         if (context.performed)
         {
-            _commandInvoker.ExecuteCommand(new MoveRightCommand());
+            _commandInvoker.ExecuteCommand(new MovePlayerRightCommand());
         }
     }
 

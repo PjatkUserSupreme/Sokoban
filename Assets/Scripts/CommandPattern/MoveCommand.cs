@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public abstract class MoveCommand : ICommand
+namespace CommandPattern
 {
-    protected Grid Grid;
+    public abstract class MoveCommand : ICommand
+    {
+        protected Grid Grid;
 
-    public abstract bool Execute();
+        public abstract bool Execute();
 
-    public abstract bool Undo();
+        public abstract bool Undo();
+    }
 }
