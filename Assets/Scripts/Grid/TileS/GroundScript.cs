@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class GroundScript : TileScript
 {
-    private bool _isOccupied;
-
-    public bool IsOccupied
+    public override bool IsOccupied()
     {
-        get => _isOccupied;
-        set => _isOccupied = value;
+        if (transform.childCount > 0)
+        {
+            return true;
+        }
+        return false;
     }
     
     public TileOccupier GetOccupier()

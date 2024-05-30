@@ -35,6 +35,11 @@ public class GridScript : MonoBehaviour
     private void Start()
     {
         SetTileMap(_levelLoader.GetLevel());
+        Init();
+        Debug.Log(IsMoveLegal("UP"));
+        Debug.Log(IsMoveLegal("LEFT"));
+        Debug.Log(IsMoveLegal("RIGHT"));
+        Debug.Log(IsMoveLegal("DOWN"));
     }
     
     private void SetTileMap(char[,] gridArray)
@@ -50,6 +55,15 @@ public class GridScript : MonoBehaviour
                 _tiles[j, i] = DecodeTile(gridArray[j,i]);
                 _tiles[j, i].Initialize(j, i, _offsetX + j * tileSize, _offsetY - i * tileSize);
             }
+        }
+    }
+
+    private void Init()
+    {
+        _player.Initialize();
+        foreach (var crate in _crates)
+        {
+            crate.Initialize();
         }
     }
 
@@ -79,7 +93,6 @@ public class GridScript : MonoBehaviour
                 GroundScript groundScript = ground.GetComponent<GroundScript>();
                 
                 TileOccupier crate = Instantiate(cratePrefab, ground.transform).GetComponent<TileOccupier>();
-                crate.Initialize(groundScript);
                 
                 _crates.Add(crate);
                 return groundScript;
@@ -96,7 +109,6 @@ public class GridScript : MonoBehaviour
                 GroundScript groundScript = ground.GetComponent<GroundScript>();
                 
                 TileOccupier player = Instantiate(playerPrefab, ground.transform).GetComponent<TileOccupier>();
-                player.Initialize(groundScript);
                 
                 _player = player;
                 return ground.GetComponent<GroundScript>();
@@ -104,5 +116,174 @@ public class GridScript : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    public bool IsMoveLegal(string direction)
+    {
+        switch (direction)
+        {
+            case "UP":
+            {
+                
+                if (_player.CoordY == 0)
+                {
+                    Debug.Log("A");
+                    return false;
+                }
+                if (_tiles[_player.CoordX, _player.CoordY - 1] is null)
+                {
+                    Debug.Log("A");
+                    return false;
+                }
+
+                if (_tiles[_player.CoordX, _player.CoordY - 1] is WallScript)
+                {
+                    Debug.Log("A");
+                    return false;
+                }
+
+                if (_tiles[_player.CoordX, _player.CoordY - 1].IsOccupied())
+                {
+                    Debug.Log("A");
+                    if (_player.CoordY == 1)
+                    {
+                        Debug.Log("A");
+                        return false;
+                    }
+                    if (_tiles[_player.CoordX, _player.CoordY - 2] is null)
+                    {
+                        Debug.Log("A");
+                        return false;
+                    }
+                    if (_tiles[_player.CoordX, _player.CoordY - 2].IsOccupied())
+                    {
+                        Debug.Log("A");
+                        return false;
+                    }
+                    if (!_tiles[_player.CoordX, _player.CoordY - 2].IsOccupied())
+                    {
+                        Debug.Log("A");
+                        return true;
+                    }
+                }
+
+                return true;
+            }
+            case "DOWN":
+            {
+                if (_player.CoordY == _tiles.GetLength(1) - 1)
+                {
+                    return false;
+                }
+                if (_tiles[_player.CoordX, _player.CoordY + 1] is null)
+                {
+                    return false;
+                }
+
+                if (_tiles[_player.CoordX, _player.CoordY + 1] is WallScript)
+                {
+                    return false;
+                }
+
+                if (_tiles[_player.CoordX, _player.CoordY + 1].IsOccupied())
+                {
+                    if (_player.CoordY == _tiles.GetLength(1) - 2)
+                    {
+                        return false;
+                    }
+                    if (_tiles[_player.CoordX, _player.CoordY + 2] is null)
+                    {
+                        return false;
+                    }
+                    if (_tiles[_player.CoordX, _player.CoordY + 2].IsOccupied())
+                    {
+                        return false;
+                    }
+                    if (!_tiles[_player.CoordX, _player.CoordY + 2].IsOccupied())
+                    {
+                        return true;
+                    }
+                }
+                return true;
+            }
+            
+            case "LEFT":
+            {
+                
+                if (_player.CoordX == 0)
+                {
+                    return false;
+                }
+                if (_tiles[_player.CoordX - 1, _player.CoordX] is null)
+                {
+                    return false;
+                }
+
+                if (_tiles[_player.CoordX - 1, _player.CoordY] is WallScript)
+                {
+                    return false;
+                }
+
+                if (_tiles[_player.CoordX - 1, _player.CoordY].IsOccupied())
+                {
+                    if (_player.CoordX == 1)
+                    {
+                        return false;
+                    }
+                    if (_tiles[_player.CoordX - 2, _player.CoordY] is null)
+                    {
+                        return false;
+                    }
+                    if (_tiles[_player.CoordX - 2, _player.CoordY].IsOccupied())
+                    {
+                        return false;
+                    }
+                    if (!_tiles[_player.CoordX - 2, _player.CoordY].IsOccupied())
+                    {
+                        return true;
+                    }
+                }
+                return true;
+            }
+            case "RIGHT":
+            {
+                if (_player.CoordX == _tiles.GetLength(0) - 1)
+                {
+                    return false;
+                }
+                if (_tiles[_player.CoordX + 1, _player.CoordY] is null)
+                {
+                    return false;
+                }
+
+                if (_tiles[_player.CoordX + 1, _player.CoordY] is WallScript)
+                {
+                    return false;
+                }
+
+                if (_tiles[_player.CoordX + 1, _player.CoordY].IsOccupied())
+                {
+                    if (_player.CoordX == _tiles.GetLength(0) - 2)
+                    {
+                        return false;
+                    }
+                    if (_tiles[_player.CoordX + 2, _player.CoordY] is null)
+                    {
+                        return false;
+                    }
+                    if (_tiles[_player.CoordX + 2, _player.CoordY].IsOccupied())
+                    {
+                        return false;
+                    }
+                    if (!_tiles[_player.CoordX + 2, _player.CoordY].IsOccupied())
+                    {
+                        return true;
+                    }
+                }
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

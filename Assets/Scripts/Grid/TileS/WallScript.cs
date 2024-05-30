@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class WallScript : TileScript
 {
-    
+    public override bool IsOccupied()
+    {
+        return true;
+    }
 }

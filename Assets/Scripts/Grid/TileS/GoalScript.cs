@@ -7,7 +7,7 @@ public class GoalScript : TileScript
     private bool _isOccupied;
     private bool _isFilled;
 
-    public bool IsOccupied()
+    public override bool IsOccupied()
     {
         if (transform.childCount > 0)
         {
@@ -29,6 +29,8 @@ public class GoalScript : TileScript
 
         return true;
     }
+    
+    
 
     public TileOccupier GetOccupier()
     {

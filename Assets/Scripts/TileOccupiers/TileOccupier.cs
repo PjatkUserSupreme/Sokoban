@@ -8,8 +8,9 @@ public class TileOccupier : MonoBehaviour
     [SerializeField] private bool isPlayer;
     
     
-    public void Initialize(TileScript tileScript)
+    public void Initialize()
     {
+        TileScript tileScript = GetComponentInParent<TileScript>();
         gameObject.transform.position = tileScript.gameObject.transform.position;
         _coordX = tileScript.CoordX;
         _coordY = tileScript.CoordY;
