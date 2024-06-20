@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using CommandPattern;
 using UnityEngine;
 
+/**
+ * Script responsible for managing the state of the level grid
+ */
 public class GridScript : MonoBehaviour
 {
     private static GridScript instance;
@@ -43,6 +46,11 @@ public class GridScript : MonoBehaviour
     {
     }
     
+    /**
+     * Sets the content of the tile map in accordance with the provided data
+     *
+     * <param name="gridArray">2D char array representing the level</param>
+     */
     public void SetTileMap(char[,] gridArray)
     {
         _crates = new List<TileOccupier>();
@@ -67,6 +75,9 @@ public class GridScript : MonoBehaviour
         Init();
     }
 
+    /**
+     * Initialize the level by providing the loaded entities with appropriate data
+     */
     private void Init()
     {
         _player.Initialize();
@@ -76,11 +87,15 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    public TileScript GetTile(int x, int y)
-    {
-        return _tiles[x, y];
-    }
-
+    /**
+     * Transforms the provided char into and appropriate tile type
+     * #  - wall
+     * . - ground
+     * * - ground with crate
+     * o - goal tile
+     * x - ground with player
+     * <param name="tileChar">Char representation of the file</param>
+     */
     private TileScript DecodeTile(char tileChar)
     {
         switch (tileChar)
