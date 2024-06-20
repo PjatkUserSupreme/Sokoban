@@ -14,16 +14,10 @@ public class ViewManager : MonoBehaviour
     [SerializeField] private GameObject mainMenuUI;
     [SerializeField] private GameObject levelChoiceUI;
     [SerializeField] private GameObject gameUI;
-    // Start is called before the first frame update
+    
     void Start()
     {
         _instance = this;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void ClearAll()
