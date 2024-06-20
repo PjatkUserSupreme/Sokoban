@@ -17,6 +17,7 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     {
         _commandInvoker = new CommandInvoker();
         _control = new PlayerControl();
+        GridScript.GetInstance().CommandInvoker = _commandInvoker;
             
         _control.Movement.SetCallbacks(this);
         _control.Movement.Enable();

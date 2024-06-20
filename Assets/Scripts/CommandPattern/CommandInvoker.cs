@@ -37,5 +37,10 @@ namespace CommandPattern
                 }
             }
         }
+
+        public void ClearStack()
+        {
+            _undoStack.Clear();
+        }
     }
 }

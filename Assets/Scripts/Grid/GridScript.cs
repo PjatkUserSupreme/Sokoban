@@ -1,16 +1,23 @@
 using System.Collections.Generic;
+using CommandPattern;
 using UnityEngine;
 
 public class GridScript : MonoBehaviour
 {
     private static GridScript instance;
+    private CommandInvoker _commandInvoker;
 
     public static GridScript GetInstance()
     {
         return instance;
     }
-    
-    
+
+    public CommandInvoker CommandInvoker
+    {
+        set => _commandInvoker = value;
+    }
+
+
     private TileScript[,] _tiles;
     private List<TileOccupier> _crates;
     private TileOccupier _player;
@@ -312,6 +319,7 @@ public class GridScript : MonoBehaviour
                 break;
             }
         }
+        Debug.Log("MOVE");
         return true;
     }
     
@@ -423,10 +431,13 @@ public class GridScript : MonoBehaviour
                 break;
             }
         }
-
+        Debug.Log("MOVECRATE");
         if (IsLevelComplete())
         {
+            Debug.Log("CLEAR");
+            _commandInvoker.ClearStack();
             _levelLoader.OnEndLevel();
+            return false;
         }
         return true;
     }
