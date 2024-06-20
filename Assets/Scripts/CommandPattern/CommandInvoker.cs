@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CommandPattern.MoveCrate;
 using UnityEngine;
 
 namespace CommandPattern
@@ -23,6 +24,17 @@ namespace CommandPattern
             {
                 ICommand command = _undoStack.Pop();
                 command.Undo();
+                if (_undoStack.Count == 0)
+                {
+                    return;
+                }
+                if (_undoStack.Peek() is MoveCrateDownCommand 
+                    || _undoStack.Peek() is MoveCrateLeftCommand 
+                    || _undoStack.Peek() is MoveCrateRightCommand 
+                    || _undoStack.Peek() is MoveCrateUpCommand)
+                {
+                    UndoCommand();
+                }
             }
         }
     }
