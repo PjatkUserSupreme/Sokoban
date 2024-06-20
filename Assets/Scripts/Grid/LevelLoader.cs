@@ -70,16 +70,23 @@ public class LevelLoader : MonoBehaviour
         _gridScript.SetTileMap(_levels[i].Item2);
     }
 
+    public void StartCurrentLevel()
+    {
+        StartLevel(_currentLevel);
+    }
+
     public void OnEndLevel()
     {
         _highestCompleted = Math.Max(_highestCompleted, _currentLevel);
         if (_currentLevel < _levels.Count - 1)
         {
             _currentLevel++;
-            StartLevel(_currentLevel);
+            //TODO: WYSWIETL EKRAN SKONCZENIA POZIOMU
+            StartCurrentLevel();    //TO PRZERZUCIC DO PRZYCISKU W TYM EKRANIE
         }
         else
         {
+            Debug.Log("LAST LEVEL ENDED");
             //TODO: PO PRZEJSCIU WSZYSTKIEGO
         }
         

@@ -424,6 +424,10 @@ public class GridScript : MonoBehaviour
             }
         }
 
+        if (IsLevelComplete())
+        {
+            _levelLoader.OnEndLevel();
+        }
         return true;
     }
     
