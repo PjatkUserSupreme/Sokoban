@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/**
+ * Script of the Goal tile, into which the player is supposed to push the crate
+ */
 public class GoalScript : TileScript
 {
     private bool _isOccupied;
@@ -14,20 +13,6 @@ public class GoalScript : TileScript
             return true;
         }
         return false;
-    }
-
-    public bool IsFilled()
-    {
-        if (!IsOccupied())
-        {
-            return false;
-        }
-        if (transform.GetComponentInChildren<TileOccupier>().IsPlayer)
-        {
-            return false;
-        }
-
-        return true;
     }
     
     

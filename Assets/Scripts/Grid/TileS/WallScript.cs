@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/**
+ * Script of the Wall tile, which blocks the movement of crates and the player
+ */
 public class WallScript : TileScript
 {
     public override bool IsOccupied()
