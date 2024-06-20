@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+/**
+ * Script of the Ground tile, upon which the player can walk and push the crate
+ */
 
 public class GroundScript : TileScript
 {

@@ -1,16 +1,26 @@
 using System.Collections.Generic;
+using CommandPattern;
 using UnityEngine;
 
+/**
+ * Script responsible for managing the state of the level grid
+ */
 public class GridScript : MonoBehaviour
 {
     private static GridScript instance;
+    private CommandInvoker _commandInvoker;
 
     public static GridScript GetInstance()
     {
         return instance;
     }
-    
-    
+
+    public CommandInvoker CommandInvoker
+    {
+        set => _commandInvoker = value;
+    }
+
+
     private TileScript[,] _tiles;
     private List<TileOccupier> _crates;
     private TileOccupier _player;
@@ -36,6 +46,11 @@ public class GridScript : MonoBehaviour
     {
     }
     
+    /**
+     * Sets the content of the tile map in accordance with the provided data
+     *
+     * <param name="gridArray">2D char array representing the level</param>
+     */
     public void SetTileMap(char[,] gridArray)
     {
         _crates = new List<TileOccupier>();
@@ -60,6 +75,9 @@ public class GridScript : MonoBehaviour
         Init();
     }
 
+    /**
+     * Initialize the level by providing the loaded entities with appropriate data
+     */
     private void Init()
     {
         _player.Initialize();
@@ -69,11 +87,15 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    public TileScript GetTile(int x, int y)
-    {
-        return _tiles[x, y];
-    }
-
+    /**
+     * Transforms the provided char into and appropriate tile type
+     * #  - wall
+     * . - ground
+     * * - ground with crate
+     * o - goal tile
+     * x - ground with player
+     * <param name="tileChar">Char representation of the file</param>
+     */
     private TileScript DecodeTile(char tileChar)
     {
         switch (tileChar)
@@ -312,6 +334,7 @@ public class GridScript : MonoBehaviour
                 break;
             }
         }
+        Debug.Log("MOVE");
         return true;
     }
     
@@ -423,7 +446,14 @@ public class GridScript : MonoBehaviour
                 break;
             }
         }
-
+        Debug.Log("MOVECRATE");
+        if (IsLevelComplete())
+        {
+            Debug.Log("CLEAR");
+            _commandInvoker.ClearStack();
+            _levelLoader.OnEndLevel();
+            return false;
+        }
         return true;
     }
     
