@@ -28,17 +28,13 @@ public class LevelLoader : MonoBehaviour
     public void OnEnable()
     {
         LoadLevels();
-        Debug.Log(_levels.Count);
         _gridScript = GetComponent<GridScript>();
         _currentLevel = 0;
         _highestCompleted = -1;
     }
 
-
-
     private void LoadLevels()
     {
-        
         _levels = new List<Tuple<string, char[,]>>();
         for (int level = 1; level < 1000; level++)
         {
@@ -66,14 +62,13 @@ public class LevelLoader : MonoBehaviour
 
     public void StartLevel(int i)
     {
-        Debug.Log(_levels[i].Item1);
+        ViewManager.GetInstance().DisplayGameUI();
         _gridScript.SetTileMap(_levels[i].Item2);
     }
 
     public void OnEndLevel()
     {
         _highestCompleted = Math.Max(_highestCompleted, _currentLevel);
-        
     }
 
     public int HighestCompleted => _highestCompleted;

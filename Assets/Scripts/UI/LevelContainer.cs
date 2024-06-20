@@ -13,20 +13,10 @@ public class LevelContainer : MonoBehaviour
     private Button _button;
 
     private int _levelID;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
+    public void Setup(string levelName, bool isCompleted, bool isAvailable, int levelId)
     {
-        
-    }
-
-    public void Setup(string name, bool isCompleted, bool isAvailable, int levelId)
-    {
-        levelName.text = name;
+        this.levelName.text = levelName;
         image.gameObject.SetActive(isCompleted);
         _button = GetComponent<Button>();
         _button.interactable = isAvailable;
