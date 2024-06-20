@@ -73,6 +73,15 @@ public class LevelLoader : MonoBehaviour
     public void OnEndLevel()
     {
         _highestCompleted = Math.Max(_highestCompleted, _currentLevel);
+        if (_currentLevel < _levels.Count - 1)
+        {
+            _currentLevel++;
+            StartLevel(_currentLevel);
+        }
+        else
+        {
+            //TODO: PO PRZEJSCIU WSZYSTKIEGO
+        }
         
     }
 
