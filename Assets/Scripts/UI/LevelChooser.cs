@@ -7,17 +7,6 @@ public class LevelChooser : MonoBehaviour
 {
     [SerializeField] private GameObject content;
     [SerializeField] private GameObject levelContainerPrefab;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void OnEnable()
     {

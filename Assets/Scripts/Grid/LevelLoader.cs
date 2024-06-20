@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Level;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 /**
  * Class responsible for keeping track of level data and which level has been completed as well as the level progression
@@ -9,6 +12,7 @@ using UnityEngine;
  */
 public class LevelLoader : MonoBehaviour
 {
+    [SerializeField] private List<Button> levelButtons;
     private static LevelLoader instance;
 
     public static LevelLoader GetInstance()
@@ -93,10 +97,12 @@ public class LevelLoader : MonoBehaviour
      */
     public void OnEndLevel()
     {
+        LevelEvents.EndLevel(_currentLevel);
         _highestCompleted = Math.Max(_highestCompleted, _currentLevel);
         if (_currentLevel < _levels.Count - 1)
         {
             _currentLevel++;
+            levelButtons[_currentLevel].interactable = true;
             //TODO: WYSWIETL EKRAN SKONCZENIA POZIOMU
             StartCurrentLevel();    //TO PRZERZUCIC DO PRZYCISKU W TYM EKRANIE
         }
