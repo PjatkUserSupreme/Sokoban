@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Level;
+using SaveSystem;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -71,15 +72,27 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
-    
-    
+    /**
+         * Unlocks levels based on highestCompleted value
+    */
+    public void UnlockLevels()
+    {
+        for (int i = 0; i <= _highestCompleted + 1; i++)
+        {
+            levelButtons[i].interactable = true;
+        }
+    }
 
     /**
-     * Load the level data for selected level
+     * Load the level data for selected level. Creates new GameData if it doesn't exist
      * <param name="i">Position of the level in load order - 1</param>
      */
     public void StartLevel(int i)
     {
+        if (!DataPersistenceManager.Instance.HasGameData())
+        {
+            DataPersistenceManager.Instance.GameData = new GameData();
+        }
         ViewManager.GetInstance().DisplayGameUI();
         _gridScript.SetTileMap(_levels[i].Item2);
     }
@@ -97,7 +110,6 @@ public class LevelLoader : MonoBehaviour
      */
     public void OnEndLevel()
     {
-        LevelEvents.EndLevel(_currentLevel);
         _highestCompleted = Math.Max(_highestCompleted, _currentLevel);
         if (_currentLevel < _levels.Count - 1)
         {
@@ -115,5 +127,10 @@ public class LevelLoader : MonoBehaviour
     }
 
     public List<Tuple<string, char[,]>> Levels => _levels;
-    public int HighestCompleted => _highestCompleted;
+
+    public int HighestCompleted
+    {
+        get => _highestCompleted;
+        set => _highestCompleted = value;
+    }
 }
