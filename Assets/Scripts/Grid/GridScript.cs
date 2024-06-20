@@ -41,10 +41,6 @@ public class GridScript : MonoBehaviour
         _levelLoader = GetComponent<LevelLoader>();
         _crates = new List<TileOccupier>();
     }
-
-    private void Start()
-    {
-    }
     
     /**
      * Sets the content of the tile map in accordance with the provided data
@@ -112,7 +108,6 @@ public class GridScript : MonoBehaviour
             }
             case '*':
             {
-                //TODO skrzynki
                 GameObject ground = Instantiate(groundPrefab, transform);
                 GroundScript groundScript = ground.GetComponent<GroundScript>();
                 
@@ -128,7 +123,6 @@ public class GridScript : MonoBehaviour
             }
             case 'X':
             {
-                //TODO gracz
                 GameObject ground = Instantiate(groundPrefab, transform);
                 GroundScript groundScript = ground.GetComponent<GroundScript>();
                 
@@ -142,7 +136,12 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    public bool IsMoveLegal(string direction)
+    /**
+     * Checks whether the proposed player move is legal based on player position and surrounding tiles
+     * <param name="direction">String specifying the direction of the move</param>
+     * <returns>Is the move legal</returns>
+     */
+    private bool IsMoveLegal(string direction)
     {
         switch (direction)
         {
@@ -301,6 +300,12 @@ public class GridScript : MonoBehaviour
         
         return false;
     }
+    
+    /**
+     * Moves the player in the specified direction if move is legal
+     * <param name="direction">String specifying the direction of the move</param>
+     * <returns>Whether the move has been performed</returns>
+     */
     public bool MovePlayer(string direction)
     {
         var isMoveLegal = IsMoveLegal(direction);
@@ -338,7 +343,11 @@ public class GridScript : MonoBehaviour
         return true;
     }
     
-    
+    /**
+     * Checks whether a crate will be moved based on player position and surrounding tiles
+     * <param name="direction">String specifying the direction of the move</param>
+     * <returns>Will a crate move</returns>
+     */
     public bool WillACrateMove(string direction)
     {
         switch (direction)
@@ -408,7 +417,12 @@ public class GridScript : MonoBehaviour
         
         return false;
     }
-    
+    /**
+     * Moves the crate next to the player in the specified direction if move is legal.
+     * Also checks whether the victory conditions are fulfilled.
+     * <param name="direction">String specifying the direction of the player move</param>
+     * <returns>Whether the move has been performed</returns>
+     */
     public bool MoveCrate(string direction)
     {
         var willACrateMove = WillACrateMove(direction);
@@ -456,7 +470,11 @@ public class GridScript : MonoBehaviour
         }
         return true;
     }
-    
+    /**
+     * Reverses the crate movement based on the player position and performed move
+     * <param name="movementToUndo">Movement performed by the crate to be undone</param>
+     * <returns>Whether the undo has been succesful</returns>
+     */
     public bool UndoMoveCrate(string movementToUndo)
     {
         
@@ -491,6 +509,10 @@ public class GridScript : MonoBehaviour
         return true;
     }
 
+    /**
+     * Checks whether the victory conditions are fulfilled based on the state of goal tiles.
+     * <returns>True if all goals are filled with crates</returns>
+     */
     public bool IsLevelComplete()
     {
         foreach (var tileScript in _tiles)

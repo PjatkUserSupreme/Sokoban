@@ -1,13 +1,15 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Level;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
+/**
+ * Class responsible for keeping track of level data and which level has been completed as well as the level progression
+ * logic.
+ */
 public class LevelLoader : MonoBehaviour
 {
     [SerializeField] private List<Button> levelButtons;
@@ -21,6 +23,9 @@ public class LevelLoader : MonoBehaviour
     private int _currentLevel;
     private int _highestCompleted;
     private GridScript _gridScript;
+    /**
+     * List of levels, which are stored as tuples containing level name and level map layout
+     */
     private List<Tuple<string, char[,]>> _levels;
 
     public void Awake()
@@ -36,7 +41,12 @@ public class LevelLoader : MonoBehaviour
         _currentLevel = 0;
         _highestCompleted = -1;
     }
-    
+
+    /**
+     * Loads all level files from Resources folder into the system.
+     *
+     * Level files must be named "level_X", where X is the level number in load order
+     */
     private void LoadLevels()
     {
         _levels = new List<Tuple<string, char[,]>>();
@@ -47,7 +57,6 @@ public class LevelLoader : MonoBehaviour
             {
                 break;
             }
-            string levelString = levelFile.text;
             List<string> lines = new List<string>(levelFile.text.Split('\n'));
             string name = lines[0];
             char[,] map = new char[lines[^1].Length, lines.Count - 1];
@@ -62,19 +71,30 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
-    public List<Tuple<string, char[,]>> Levels => _levels;
     
+    
+
+    /**
+     * Load the level data for selected level
+     * <param name="i">Position of the level in load order - 1</param>
+     */
     public void StartLevel(int i)
     {
         ViewManager.GetInstance().DisplayGameUI();
         _gridScript.SetTileMap(_levels[i].Item2);
     }
 
+    /**
+     * Start level declared to be the current one now
+     */
     public void StartCurrentLevel()
     {
         StartLevel(_currentLevel);
     }
 
+    /**
+     * Called after all victory conditions are fulfilled. Updates internal level count and enables appropriate UI
+     */
     public void OnEndLevel()
     {
         LevelEvents.EndLevel(_currentLevel);
@@ -94,5 +114,6 @@ public class LevelLoader : MonoBehaviour
         
     }
 
+    public List<Tuple<string, char[,]>> Levels => _levels;
     public int HighestCompleted => _highestCompleted;
 }
