@@ -9,7 +9,7 @@ public class PlayerInput : MonoBehaviour, PlayerControl.IMovementActions
     private PlayerControl _control;
     private CommandInvoker _commandInvoker;
     
-    private void Awake()
+    private void Start()
     {
         PrepareInputSystem();
     }

@@ -128,7 +128,6 @@ public class LevelLoader : MonoBehaviour
         }
         else
         {
-            Debug.Log("LAST LEVEL ENDED");
             nextLevelButton.SetActive(false);
         }
         Time.timeScale = 0;
