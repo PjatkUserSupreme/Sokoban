@@ -14,7 +14,10 @@ using UnityEngine.UI;
 public class LevelLoader : MonoBehaviour
 {
     [SerializeField] private List<Button> levelButtons;
+    [SerializeField] private GameObject winScreen;
+    [SerializeField] private GameObject nextLevelButton;
     private static LevelLoader instance;
+    
 
     public static LevelLoader GetInstance()
     {
@@ -113,21 +116,27 @@ public class LevelLoader : MonoBehaviour
         _highestCompleted = Math.Max(_highestCompleted, _currentLevel);
         if (_currentLevel < _levels.Count - 1)
         {
+            nextLevelButton.SetActive(true);
             _currentLevel++;
             levelButtons[_currentLevel].interactable = true;
-            //TODO: WYSWIETL EKRAN SKONCZENIA POZIOMU
-            StartCurrentLevel();    //TO PRZERZUCIC DO PRZYCISKU W TYM EKRANIE
         }
         else
         {
             Debug.Log("LAST LEVEL ENDED");
-            //TODO: PO PRZEJSCIU WSZYSTKIEGO
+            nextLevelButton.SetActive(false);
         }
-        
+        Time.timeScale = 0;
+        winScreen.SetActive(true);
     }
 
     public List<Tuple<string, char[,]>> Levels => _levels;
-
+    
+    public int CurrentLevel
+    {
+        get => _currentLevel;
+        set => _currentLevel = value;
+    }
+    
     public int HighestCompleted
     {
         get => _highestCompleted;
