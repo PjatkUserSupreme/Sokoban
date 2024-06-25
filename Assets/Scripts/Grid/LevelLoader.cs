@@ -83,7 +83,7 @@ public class LevelLoader : MonoBehaviour
     */
     public void UnlockLevels()
     {
-        for (int i = 0; i <= _highestCompleted + 1; i++)
+        for (int i = 0; i <= Math.Min(_highestCompleted+1, 9); i++)
         {
             levelButtons[i].interactable = true;
         }
