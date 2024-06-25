@@ -35,7 +35,7 @@ public class GridScript : MonoBehaviour
     private float _offsetX;
     private float _offsetY;
     
-    private void OnEnable()
+    private void Awake()
     {
         instance = this;
         _levelLoader = GetComponent<LevelLoader>();
