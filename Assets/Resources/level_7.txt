@@ -1,0 +1,9 @@
+Level 7 - Minicosmos 2, created by Aymeric du Pelou
+########
+###...##
+#.*.#.##
+#.#..o.#
+#....#.#
+##*#o..#
+##X..###
+########

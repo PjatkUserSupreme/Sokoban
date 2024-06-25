@@ -1,0 +1,6 @@
+Level 3 - by Kazimierz Piontkowski
+#######
+#..#..#
+#X..*.#
+#.o...#
+#######
