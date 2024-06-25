@@ -103,7 +103,6 @@ public class LevelLoader : MonoBehaviour
         _gridScript.SetTileMap(_levels[i].Item2);
         _currentLevel = i;
         
-        Debug.Log(_gridScript.GetDesiredCameraCorners());
         AdjustCamera();
     }
 
@@ -141,9 +140,6 @@ public class LevelLoader : MonoBehaviour
         Vector4 corners = _gridScript.GetDesiredCameraCorners();
         float centerX = (corners.y + corners.w) / 2;
         float centerY = (corners.x + corners.z) / 2;
-        Debug.Log(corners.y);
-        Debug.Log(corners.w);
-        Debug.Log(centerX);
         
         _camera.gameObject.transform.position = new Vector3(centerX, centerY, -1);
         float orthoSize = (Math.Abs(corners.y - corners.w) * 1.1f) * Screen.height / Screen.width * 0.5f;

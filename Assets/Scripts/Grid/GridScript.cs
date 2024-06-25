@@ -462,7 +462,6 @@ public class GridScript : MonoBehaviour
         }
         if (IsLevelComplete())
         {
-            Debug.Log("CLEAR");
             _commandInvoker.ClearStack();
             _levelLoader.OnEndLevel();
             return false;
