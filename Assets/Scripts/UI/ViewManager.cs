@@ -14,6 +14,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] private GameObject mainMenuUI;
     [SerializeField] private GameObject levelChoiceUI;
     [SerializeField] private GameObject gameUI;
+    [SerializeField] private GameObject winScreen;
     
     void Start()
     {
@@ -25,6 +26,7 @@ public class ViewManager : MonoBehaviour
         mainMenuUI.SetActive(false);
         levelChoiceUI.SetActive(false);
         gameUI.SetActive(false);
+        winScreen.SetActive(false);
     }
 
     public void DisplayMainMenu()
