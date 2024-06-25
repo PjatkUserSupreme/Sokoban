@@ -53,4 +53,9 @@ public class ViewManager : MonoBehaviour
         ClearAll();
         howToPlayUI.SetActive(true);
     }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }
