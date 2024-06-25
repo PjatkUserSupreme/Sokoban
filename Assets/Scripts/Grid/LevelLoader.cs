@@ -24,6 +24,8 @@ public class LevelLoader : MonoBehaviour
     private int _currentLevel;
     private int _highestCompleted;
     private GridScript _gridScript;
+    private Camera _camera;
+    
     /**
      * List of levels, which are stored as tuples containing level name and level map layout
      */
@@ -41,6 +43,7 @@ public class LevelLoader : MonoBehaviour
         _gridScript = GetComponent<GridScript>();
         _currentLevel = 0;
         _highestCompleted = -1;
+        _camera = Camera.main;
     }
 
     /**
@@ -95,6 +98,9 @@ public class LevelLoader : MonoBehaviour
         }
         ViewManager.GetInstance().DisplayGameUI();
         _gridScript.SetTileMap(_levels[i].Item2);
+        
+        Debug.Log(_gridScript.GetDesiredCameraCorners());
+        AdjustCamera();
     }
 
     /**
@@ -124,6 +130,21 @@ public class LevelLoader : MonoBehaviour
             //TODO: PO PRZEJSCIU WSZYSTKIEGO
         }
         
+    }
+
+    private void AdjustCamera()
+    {
+        Vector4 corners = _gridScript.GetDesiredCameraCorners();
+        float centerX = (corners.y + corners.w) / 2;
+        float centerY = (corners.x + corners.z) / 2;
+        Debug.Log(corners.y);
+        Debug.Log(corners.w);
+        Debug.Log(centerX);
+        
+        _camera.gameObject.transform.position = new Vector3(centerX, centerY, -1);
+        float orthoSize = (Math.Abs(corners.y - corners.w) * 1.1f) * Screen.height / Screen.width * 0.5f;
+        orthoSize = Math.Max(orthoSize, 4);
+        _camera.orthographicSize = orthoSize;
     }
 
     public List<Tuple<string, char[,]>> Levels => _levels;

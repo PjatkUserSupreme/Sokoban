@@ -532,4 +532,19 @@ public class GridScript : MonoBehaviour
         
         return true;
     }
+
+    /**
+     * <returns>A vector containing the desired coordinates for camera in following order: up, left, down, right</returns>>
+     */
+    public Vector4 GetDesiredCameraCorners()
+    {
+        Vector4 corners = new Vector4();
+        int lastX = _tiles.GetLength(0) - 1;
+        int lastY = _tiles.GetLength(1) - 1;
+        corners.x = _tiles[0, 0].gameObject.transform.localPosition.y + (tileSize / 2);
+        corners.y = _tiles[0, 0].gameObject.transform.localPosition.x - (tileSize / 2);
+        corners.z = _tiles[lastX, lastY].gameObject.transform.localPosition.y - (tileSize / 2);
+        corners.w = _tiles[lastX, lastY].gameObject.transform.localPosition.x + (tileSize / 2);
+        return corners;
+    }
 }
