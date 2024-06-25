@@ -23,7 +23,7 @@ public class GridScript : MonoBehaviour
 
     private TileScript[,] _tiles;
     private List<TileOccupier> _crates;
-    private TileOccupier _player;
+    private PlayerScript _player;
     private LevelLoader _levelLoader;
 
     [SerializeField] private GameObject wallPrefab;
@@ -126,7 +126,7 @@ public class GridScript : MonoBehaviour
                 GameObject ground = Instantiate(groundPrefab, transform);
                 GroundScript groundScript = ground.GetComponent<GroundScript>();
                 
-                TileOccupier player = Instantiate(playerPrefab, ground.transform).GetComponent<TileOccupier>();
+                PlayerScript player = Instantiate(playerPrefab, ground.transform).GetComponent<PlayerScript>();
                 
                 _player = player;
                 return ground.GetComponent<GroundScript>();
@@ -339,7 +339,7 @@ public class GridScript : MonoBehaviour
                 break;
             }
         }
-        Debug.Log("MOVE");
+        _player.SetSprite(direction);
         return true;
     }
     
@@ -460,7 +460,6 @@ public class GridScript : MonoBehaviour
                 break;
             }
         }
-        Debug.Log("MOVECRATE");
         if (IsLevelComplete())
         {
             Debug.Log("CLEAR");
