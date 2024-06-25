@@ -14,7 +14,8 @@ public class ViewManager : MonoBehaviour
     [SerializeField] private GameObject mainMenuUI;
     [SerializeField] private GameObject levelChoiceUI;
     [SerializeField] private GameObject gameUI;
-    [SerializeField] private GameObject winScreen;
+    [SerializeField] private GameObject howToPlayUI;
+    [SerializeField] private GameObject winScreenUI;
     
     void Start()
     {
@@ -26,7 +27,8 @@ public class ViewManager : MonoBehaviour
         mainMenuUI.SetActive(false);
         levelChoiceUI.SetActive(false);
         gameUI.SetActive(false);
-        winScreen.SetActive(false);
+        howToPlayUI.SetActive(false);
+        winScreenUI.SetActive(false);
     }
 
     public void DisplayMainMenu()
@@ -45,5 +47,10 @@ public class ViewManager : MonoBehaviour
     {
         ClearAll();
         gameUI.SetActive(true);
+    }
+    public void DisplayHowToPlay()
+    {
+        ClearAll();
+        howToPlayUI.SetActive(true);
     }
 }
