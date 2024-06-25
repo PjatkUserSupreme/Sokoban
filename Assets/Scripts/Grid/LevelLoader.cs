@@ -101,6 +101,7 @@ public class LevelLoader : MonoBehaviour
         }
         ViewManager.GetInstance().DisplayGameUI();
         _gridScript.SetTileMap(_levels[i].Item2);
+        _currentLevel = i;
         
         Debug.Log(_gridScript.GetDesiredCameraCorners());
         AdjustCamera();
